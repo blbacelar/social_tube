@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +17,11 @@ interface ConfigData {
 
 export default function ConfigPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPasswords, setShowPasswords] = useState({
+    facebook: false,
+    instagram: false,
+    linkedin: false,
+  });
   const [config, setConfig] = useState<ConfigData>({
     facebookApiKey: "",
     instagramApiKey: "",
@@ -93,6 +99,15 @@ export default function ConfigPage() {
     }));
   };
 
+  const togglePasswordVisibility = (
+    field: "facebook" | "instagram" | "linkedin"
+  ) => {
+    setShowPasswords((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
   return (
     <div className="container mx-auto py-8">
       <Card>
@@ -104,36 +119,81 @@ export default function ConfigPage() {
             <div className="space-y-4">
               <div>
                 <Label htmlFor="facebookApiKey">Facebook API Key</Label>
-                <Input
-                  id="facebookApiKey"
-                  name="facebookApiKey"
-                  type="password"
-                  value={config.facebookApiKey}
-                  onChange={handleChange}
-                  disabled={isLoading}
-                />
+                <div className="relative">
+                  <Input
+                    id="facebookApiKey"
+                    name="facebookApiKey"
+                    type={showPasswords.facebook ? "text" : "password"}
+                    value={config.facebookApiKey}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={() => togglePasswordVisibility("facebook")}
+                  >
+                    {showPasswords.facebook ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
               </div>
               <div>
                 <Label htmlFor="instagramApiKey">Instagram API Key</Label>
-                <Input
-                  id="instagramApiKey"
-                  name="instagramApiKey"
-                  type="password"
-                  value={config.instagramApiKey}
-                  onChange={handleChange}
-                  disabled={isLoading}
-                />
+                <div className="relative">
+                  <Input
+                    id="instagramApiKey"
+                    name="instagramApiKey"
+                    type={showPasswords.instagram ? "text" : "password"}
+                    value={config.instagramApiKey}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={() => togglePasswordVisibility("instagram")}
+                  >
+                    {showPasswords.instagram ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
               </div>
               <div>
                 <Label htmlFor="linkedinApiKey">LinkedIn API Key</Label>
-                <Input
-                  id="linkedinApiKey"
-                  name="linkedinApiKey"
-                  type="password"
-                  value={config.linkedinApiKey}
-                  onChange={handleChange}
-                  disabled={isLoading}
-                />
+                <div className="relative">
+                  <Input
+                    id="linkedinApiKey"
+                    name="linkedinApiKey"
+                    type={showPasswords.linkedin ? "text" : "password"}
+                    value={config.linkedinApiKey}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={() => togglePasswordVisibility("linkedin")}
+                  >
+                    {showPasswords.linkedin ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>

@@ -30,10 +30,14 @@ model Post {
 }
 
 model SocialMediaConfig {
-  id              String @id @default(cuid())
-  userId          String @unique
-  facebookApiKey  String?
-  instagramApiKey String?
-  linkedinApiKey  String?
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  facebookApiKey    String?
+  facebookApiKeyIv  String?
+  instagramApiKey   String?
+  instagramApiKeyIv String?
+  linkedinApiKey    String?
+  linkedinApiKeyIv  String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
-
